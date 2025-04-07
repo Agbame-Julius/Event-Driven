@@ -21,9 +21,7 @@ jobs:
 
     - name: Set up SAM CLI
       run: |
-        curl -Lo sam-cli-linux-x86_64.zip https://github.com/aws/aws-sam-cli/releases/download/v2.0.0/aws-sam-cli-linux-x86_64.zip
-        unzip sam-cli-linux-x86_64.zip -d /usr/local/bin
-        rm -rf sam-cli-linux-x86_64.zip
+        pip install aws-sam-cli
 
     - name: Build the SAM application
       run: sam build
