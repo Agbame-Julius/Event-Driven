@@ -11,14 +11,14 @@ Resources:
   NotificationBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: ny-s3-uploads
+      BucketName: my-s3-uploads
 
   SNSTopic:
     Type: AWS::SNS::Topic
     Properties:
       Subscription:
         - Protocol: email
-          Endpoint: juliusagbame13@gmail.com  # Replace this
+          Endpoint: juliusagbame13@gmail.com
 
   S3NotificationFunction:
     Type: AWS::Serverless::Function
