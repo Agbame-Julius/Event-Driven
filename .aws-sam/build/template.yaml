@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Java 21 Event-Driven App with S3 and SNS
+Globals:
+  Function:
+    Timeout: 10
+Resources:
+  NotificationBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ny-s3-uploads
+  SNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      Subscription:
+      - Protocol: email
+        Endpoint: juliusagbame13@gmail.com
+  S3NotificationFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: S3NotificationFunction
+      Handler: helloworld.App::handleRequest
+      Runtime: java21
+      MemorySize: 512
+      Environment:
+        Variables:
+          SNS_TOPIC_ARN:
+            Ref: SNSTopic
+      Events:
+        S3Upload:
+          Type: S3
+          Properties:
+            Bucket:
+              Ref: NotificationBucket
+            Events: s3:ObjectCreated:*
+    Metadata:
+      SamResourceId: S3NotificationFunction
+  LambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Fn::GetAtt:
+        - S3NotificationFunction
+        - Arn
+      Action: lambda:InvokeFunction
+      Principal: s3.amazonaws.com
+      SourceArn:
+        Fn::GetAtt:
+        - NotificationBucket
+        - Arn
+Outputs:
+  BucketName:
+    Description: S3 bucket name
+    Value:
+      Ref: NotificationBucket
