@@ -21,7 +21,7 @@ public class App implements RequestHandler<Map<String, Object>, String> {
         var bucket = ((Map<String, Object>) s3.get("bucket")).get("name");
         var key = ((Map<String, Object>) s3.get("object")).get("key");
 
-        String message = "A new object has been uploaded:\nBucket: " + bucket + "\nKey: " + key;
+        String message = "A new object has been uploaded:\nBucket: " + bucket + " ";
 
         SnsClient snsClient = SnsClient.create();
         snsClient.publish(PublishRequest.builder()
