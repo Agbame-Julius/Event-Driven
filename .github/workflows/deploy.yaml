@@ -3,7 +3,8 @@ name: Deploy SAM Application
 on:
   push:
     branches:
-      - main  # Change this to your default branch (e.g., 'main', 'master')
+      - main
+      - dev
 
 jobs:
   deploy:
@@ -32,11 +33,20 @@ jobs:
     - name: Set up SAM CLI
       uses: aws-actions/setup-sam@v2
 
+    - name: Determine the environment to Deploy
+      id: env
+      run: |
+        if [[ "${GITHUB_REF##*/}" == "main" ]]; then
+        echo "ENV=prod" >> $GITHUB_ENV
+        else
+        echo "ENV=dev" >> $GITHUB_ENV
+        fi
+
     - name: Build the SAM application
-      run: sam build
+      run: sam build --config-env $ENV
 
     - name: Deploy the SAM application
-      run: sam deploy --no-confirm-changeset --stack-name my-sam-stack --capabilities CAPABILITY_IAM
+      run: sam deploy --no-confirm-changeset --config-env $ENV
 
     - name: Notify Deployment Success
       run: echo "Deployment successful!"
