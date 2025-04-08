@@ -33,8 +33,6 @@ Resources:
       Policies:
         - SNSPublishMessagePolicy:
             TopicName: !GetAtt SNSTopic.TopicName
-        - S3ReadPolicy:
-            BucketName: !Ref NotificationBucket
       Events:
         S3Upload:
           Type: S3
