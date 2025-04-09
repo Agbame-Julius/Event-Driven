@@ -27,7 +27,7 @@ Resources:
       TopicName: !Sub "my-sns-topic-${Env}"
       Subscription:
         - Protocol: email
-          Endpoint: juliusagbame@gmail.com
+          Endpoint: julius.agbame@amalitech.com
 
   S3NotificationFunction:
     Type: AWS::Serverless::Function
