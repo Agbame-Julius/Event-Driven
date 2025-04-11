@@ -19,7 +19,6 @@ public class App implements RequestHandler<Map<String, Object>, String> {
         var record = records.get(0);
         var s3 = (Map<String, Object>) record.get("s3");
         var bucket = ((Map<String, Object>) s3.get("bucket")).get("name");
-        var key = ((Map<String, Object>) s3.get("object")).get("key");
 
         String message = "A new object has been uploaded:\nBucket: " + bucket + " ";
 
