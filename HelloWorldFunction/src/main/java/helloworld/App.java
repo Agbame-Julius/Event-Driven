@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sns.model.PublishRequest;
 
+import java.util.List;
 import java.util.Map;
 
 public class App implements RequestHandler<Map<String, Object>, String> {
@@ -15,7 +16,7 @@ public class App implements RequestHandler<Map<String, Object>, String> {
     public String handleRequest(Map<String, Object> event, Context context) {
         System.out.println("EVENT: " + event);
 
-        var records = (java.util.List<Map<String, Object>>) event.get("Records");
+        var records = (List<Map<String, Object>>) event.get("Records");
         var record = records.get(0);
         var s3 = (Map<String, Object>) record.get("s3");
         var bucket = ((Map<String, Object>) s3.get("bucket")).get("name");
