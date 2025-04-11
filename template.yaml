@@ -39,6 +39,7 @@ Resources:
       Environment:
         Variables:
           SNS_TOPIC_ARN: !Ref SNSTopic
+          APP_ENV: !Ref Env
       Policies:
         - SNSPublishMessagePolicy:
             TopicName: !GetAtt SNSTopic.TopicName

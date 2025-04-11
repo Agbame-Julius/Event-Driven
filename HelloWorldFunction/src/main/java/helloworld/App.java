@@ -11,6 +11,7 @@ import java.util.Map;
 public class App implements RequestHandler<Map<String, Object>, String> {
 
     private final String topicArn = System.getenv("SNS_TOPIC_ARN");
+    private final String env = System.getenv("APP_ENV");
 
     @Override
     public String handleRequest(Map<String, Object> event, Context context) {
@@ -29,7 +30,7 @@ public class App implements RequestHandler<Map<String, Object>, String> {
                 .subject("New File Uploaded to S3")
                 .message(message)
                 .build());
-
+        context.getLogger().log("Development "+  env);
         return "Email notification sent.";
     }
 }
